@@ -7,4 +7,8 @@ export interface Footer {
     icon?: string;
     value: string;
   };
+  right: {
+    icon?: string;
+    value: string;
+  };
 }

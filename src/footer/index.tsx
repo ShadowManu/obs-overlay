@@ -61,7 +61,10 @@ const Footer: React.FC<Props> = ({ data }) => {
           value="Any technical question, or just say hello!"
         />
       </Center>
-      <FooterSide value="manuelpacheco.dev" />
+      <FooterSide
+        value={data.right.value}
+        icon={data.right.icon && ICONS[data.right.icon]}
+      />
     </Container>
   );
 };
