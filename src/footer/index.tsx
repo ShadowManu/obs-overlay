@@ -52,14 +52,13 @@ const Footer: React.FC<Props> = ({ data }) => {
       <Center>
         {/* Activity */}
         <FooterSection
-          title="Current Activity"
-          value="Programming an Overlay: connecting with Firebase"
+          title={data.sections.current.title}
+          value={data.sections.current.value}
         />
-        {/* Chat promotion */}
-        <FooterSection
-          title="Ask in Chat"
-          value="Any technical question, or just say hello!"
-        />
+        {/* Rotation */}
+        {data.sections.rotation.map((section, i) => (
+          <FooterSection key={i} {...section} />
+        ))}
       </Center>
       <FooterSide
         value={data.right.value}

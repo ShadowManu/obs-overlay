@@ -11,4 +11,13 @@ export interface Footer {
     icon?: string;
     value: string;
   };
+  sections: {
+    current: FooterSection;
+    rotation: FooterSection[];
+  };
+}
+
+interface FooterSection {
+  title: string;
+  value: string;
 }
