@@ -3,7 +3,10 @@ import FooterSection from "../shared/footer-section";
 import FooterSide from "../shared/footer-side";
 
 import Background from "./background";
+
+import about from "./about.png";
 import youtube from "./youtube.png";
+import { Footer as FooterData } from "../core/types";
 
 const Container = styled.div`
   position: absolute;
@@ -28,24 +31,39 @@ const Center = styled.div`
   align-items: stretch;
 `;
 
-const Footer = () => (
-  <Container>
-    <Background />
-    <FooterSide reverse value="manuelpachecodev" icon={youtube} />
-    <Center>
-      {/* Activity */}
-      <FooterSection
-        title="Current Activity"
-        value="Doing a React-based custom overlay"
+const ICONS: Partial<Record<string, string>> = {
+  youtube: youtube,
+  about: about,
+};
+
+interface Props {
+  data: FooterData;
+}
+
+const Footer: React.FC<Props> = ({ data }) => {
+  return (
+    <Container>
+      <Background />
+      <FooterSide
+        reverse
+        value={data.left.value}
+        icon={data.left.icon && ICONS[data.left.icon]}
       />
-      {/* Chat promotion */}
-      <FooterSection
-        title="Ask in Chat"
-        value="Any technical question, or just say hello!"
-      />
-    </Center>
-    <FooterSide value="manuelpacheco.dev" />
-  </Container>
-);
+      <Center>
+        {/* Activity */}
+        <FooterSection
+          title="Current Activity"
+          value="Programming an Overlay: connecting with Firebase"
+        />
+        {/* Chat promotion */}
+        <FooterSection
+          title="Ask in Chat"
+          value="Any technical question, or just say hello!"
+        />
+      </Center>
+      <FooterSide value="manuelpacheco.dev" />
+    </Container>
+  );
+};
 
 export default Footer;
