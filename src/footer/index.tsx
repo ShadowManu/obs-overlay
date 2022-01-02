@@ -30,6 +30,7 @@ const Container = styled.div`
 const Center = styled.div`
   margin: 0 50px;
   flex: 1 1 0;
+  overflow: hidden;
 
   display: flex;
   flex-direction: row;
