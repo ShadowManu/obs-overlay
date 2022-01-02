@@ -17,7 +17,7 @@ export interface Footer {
   };
 }
 
-interface FooterSection {
+export interface FooterSection {
   title: string;
   value: string;
 }

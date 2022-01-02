@@ -11,6 +11,8 @@ const Title = styled.div`
   color: #00ffae;
   font-size: 12px;
   text-transform: uppercase;
+  text-overflow: clip;
+  white-space: nowrap;
   filter: drop-shadow(0px 0px 2px #00ffae);
 `;
 
@@ -18,6 +20,11 @@ const Value = styled.div`
   margin-left: 16px;
   color: white;
   font-size: 18px;
+  text-overflow: clip;
+  white-space: nowrap;
+
+  overflow: hidden;
+
   filter: drop-shadow(0px 0px 1px white);
 `;
 

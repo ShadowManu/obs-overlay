@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { useTransition, animated, config } from "react-spring";
+
 import FooterSection from "../shared/footer-section";
 import FooterSide from "../shared/footer-side";
 
@@ -6,7 +8,11 @@ import Background from "./background";
 
 import about from "./about.png";
 import youtube from "./youtube.png";
-import { Footer as FooterData } from "../core/types";
+import {
+  Footer as FooterData,
+  FooterSection as FooterSectionData,
+} from "../core/types";
+import { useEffect, useState } from "react";
 
 const Container = styled.div`
   position: absolute;
@@ -27,8 +33,13 @@ const Center = styled.div`
 
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: stretch;
+
+  & > * {
+    margin-left: 30px;
+    overflow: hidden;
+  }
 `;
 
 const ICONS: Partial<Record<string, string>> = {
@@ -40,7 +51,38 @@ interface Props {
   data: FooterData;
 }
 
+const useRotation = (
+  rotation: FooterSectionData[],
+  interval: number
+): FooterSectionData[] => {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(
+      () => setIndex((i) => (i + 1) % rotation.length),
+      interval
+    );
+    return () => clearInterval(id);
+  }, [rotation, interval]);
+
+  const ELEMENTS = 2;
+
+  return [...Array(ELEMENTS)].map((_, i) => {
+    const validIndex = (index + i) % rotation.length;
+    return rotation[validIndex];
+  });
+};
+
 const Footer: React.FC<Props> = ({ data }) => {
+  const rotation = useRotation(data.sections.rotation, 15 * 1000);
+
+  const transitions = useTransition(rotation, {
+    from: { opacity: 0 },
+    enter: { opacity: 1, marginLeft: 60, maxWidth: "30%" },
+    leave: { opacity: 0, marginLeft: 0, maxWidth: "0%" },
+    config: config.slow,
+  });
+
   return (
     <Container>
       <Background />
@@ -56,8 +98,10 @@ const Footer: React.FC<Props> = ({ data }) => {
           value={data.sections.current.value}
         />
         {/* Rotation */}
-        {data.sections.rotation.map((section, i) => (
-          <FooterSection key={i} {...section} />
+        {transitions((style, section) => (
+          <animated.div style={style}>
+            <FooterSection {...section} />
+          </animated.div>
         ))}
       </Center>
       <FooterSide
